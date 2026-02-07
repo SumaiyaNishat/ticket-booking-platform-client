@@ -1,9 +1,17 @@
 import React from "react";
 import { FaBusAlt } from "react-icons/fa";
 import { Link, NavLink } from "react-router";
-
+import useAuth from '../../../hooks/useAuth';
 
 const Navbar = () => {
+
+  const {user, logOut} = useAuth();
+
+  const handleLogOut = () =>{
+    logOut().then().catch(error => {
+      console.log(error)
+    })
+  }
   
   const links = (
     <>
@@ -64,8 +72,12 @@ const Navbar = () => {
       <div className="navbar-end flex gap-2">
         
           
-         <Link to="/login" className="btn rounded-4xl bg-amber-300 text-white ">Login</Link>
-         <Link to="/register" className="btn rounded-4xl bg-amber-400 text-white">Register</Link>
+        {
+          user ? <a onClick={handleLogOut} className="btn rounded-4xl bg-amber-300 text-white ">Log Out</a> :
+           <Link to="/login" className="btn rounded-4xl bg-amber-300 text-white ">Login</Link>
+         
+        }
+        <Link to="/register" className="btn rounded-4xl bg-amber-400 text-white">Register</Link>
         
       </div>
     </div>

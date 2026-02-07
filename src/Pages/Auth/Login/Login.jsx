@@ -1,6 +1,8 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router';
+import useAuth from '../../../hooks/useAuth';
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 
 
@@ -11,14 +13,23 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const handleRegistration = (data) => {
-    console.log("after register", data);
+  const {signInUser} = useAuth()
+
+  const handleLogin = (data) => {
+    console.log("after login", data);
+    signInUser(data.email, data.password)
+    .then(result =>{
+      console.log(result.user)
+    }).catch(error =>{
+      console.log(error)
+    })
   };
+
   return (
      <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
       <h3 className="text-3xl text-center">Welcome Back TicketBari</h3>
       <p className="text-center">Please Login</p>
-      <form className="card-body" onSubmit={handleSubmit(handleRegistration)}>
+      <form className="card-body" onSubmit={handleSubmit(handleLogin)}>
         <fieldset className="fieldset">
           <label className="label">Email</label>
           <input
@@ -62,8 +73,9 @@ const Login = () => {
         </fieldset>
         <p>New to TicketBari <Link className="text-blue-400 underline" to="/register">Register</Link></p>
       </form>
+      <SocialLogin></SocialLogin>
     </div>
   )
 }
 
-export default Login
+export default Login;
