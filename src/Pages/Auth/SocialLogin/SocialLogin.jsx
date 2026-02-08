@@ -7,7 +7,7 @@ const SocialLogin = () => {
     const { signInGoogle } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  // console.log('location in social', location)
+ 
 
   const handleGoogleSignIn = () =>{
         signInGoogle()

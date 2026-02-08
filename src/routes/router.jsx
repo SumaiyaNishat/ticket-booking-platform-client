@@ -6,6 +6,9 @@ import TicketsDetails from "../Pages/TicketsDetails/TicketsDetails";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
+import PrivateRoute from "./PrivateRoute";
+import Vendor from "../Pages/Vendor/Vendor/Vendor";
+import AddTickets from "../Pages/Vendor/AddTickets/AddTickets";
 
 
 export const router = createBrowserRouter([
@@ -24,6 +27,15 @@ export const router = createBrowserRouter([
       {
         path:"/ticket/:id",
         element: <TicketsDetails></TicketsDetails>
+      },
+      {
+        path: 'vendor',
+        element:<PrivateRoute><Vendor></Vendor></PrivateRoute>
+      },
+      {
+        path: 'addtickets',
+        element:<PrivateRoute><AddTickets></AddTickets></PrivateRoute>,
+        loader: () => fetch("/tickets.json").then((res) => res.json()),
       }
       
     ]
