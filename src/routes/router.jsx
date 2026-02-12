@@ -9,6 +9,8 @@ import Register from "../Pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import Vendor from "../Pages/Vendor/Vendor/Vendor";
 import AddTickets from "../Pages/Vendor/AddTickets/AddTickets";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MyAddedTickets from "../Pages/Vendor/MyAddTickets/MyAddTickets";
 
 
 export const router = createBrowserRouter([
@@ -31,11 +33,6 @@ export const router = createBrowserRouter([
       {
         path: 'vendor',
         element:<PrivateRoute><Vendor></Vendor></PrivateRoute>
-      },
-      {
-        path: 'addtickets',
-        element:<PrivateRoute><AddTickets></AddTickets></PrivateRoute>,
-        loader: () => fetch("/tickets.json").then((res) => res.json()),
       }
       
     ]
@@ -53,6 +50,22 @@ export const router = createBrowserRouter([
         element: <Register></Register>
       }
 
+    ]
+  },
+  {
+    path: '/dashboard',
+    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    children: [
+      {
+        path: '/dashboard/addtickets',
+        element:<PrivateRoute><AddTickets></AddTickets></PrivateRoute>,
+        loader: () => fetch("/tickets.json").then((res) => res.json()),
+      },
+      {
+        path: '/dashboard/myAddedTickets',
+        element: <MyAddedTickets></MyAddedTickets>
+      }
+      
     ]
   }
 ]);

@@ -10,8 +10,8 @@
     "departureTime": "22:30",
     "perks": ["AC", "WiFi"],
     "image": "https://i.ibb.co/example1.jpg",
-    "vendorName": "Green Line",
-    "vendorEmail": "vendor@greenline.com"
+    "vendorName": "",
+    "vendorEmail": ""
   },
   {
     "title": "Dhaka to Chittagong Intercity Train",
@@ -56,15 +56,15 @@
     "vendorEmail": "vendor@sundarbanlaunch.com"
   },
   {
-    "title": "Rangpur to Rajshahi Express Train",
+    "title": "Rangpur to Dhaka Express Train",
     "from": "Rangpur",
-    "to": "Rajshahi",
+    "to": "Dhaka",
     "transportType": "Train",
     "price": 850,
     "quantity": 110,
     "departureDate": "2026-03-15",
     "departureTime": "22:30",
-    "perks": ["Breakfast"],
+    "perks": "Breakfast",
     "image": "https://i.ibb.co/example5.jpg",
     "vendorName": "Bangladesh Railway",
     "vendorEmail": "vendor@railway.gov.bd"
@@ -122,8 +122,8 @@
     "departureTime": "08:00",
     "perks": ["AC"],
     "image": "https://i.ibb.co/example9.jpg",
-    "vendorName": "Bangladesh Railway",
-    "vendorEmail": "vendor@railway.gov.bd"
+    "vendorName": "",
+    "vendorEmail": ""
   },
   {
     "title": "Dhaka to Kuakata Night Launch",
@@ -136,22 +136,22 @@
     "departureTime": "18:45",
     "perks": ["AC", "Dinner"],
     "image": "https://i.ibb.co/example10.jpg",
-    "vendorName": "MV Kalam Khan",
-    "vendorEmail": "vendor@kalamkhan.com"
+    "vendorName": "",
+    "vendorEmail": ""
   },
   {
     "title": "Dhaka to Chittagong Evening Flight",
     "from": "Dhaka",
     "to": "Chittagong",
     "transportType": "Plane",
-    "price": 5800,
-    "quantity": 20,
+    "price": 5000,
+    "quantity": 5,
     "departureDate": "2026-03-19",
     "departureTime": "18:00",
     "perks": ["Meal"],
     "image": "https://i.ibb.co/example11.jpg",
-    "vendorName": "NovoAir",
-    "vendorEmail": "vendor@novoair.com"
+    "vendorName": "",
+    "vendorEmail": ""
   },
   {
     "title": "Dhaka to Bogura AC Bus",
@@ -163,8 +163,8 @@
     "departureDate": "2026-03-12",
     "departureTime": "22:00",
     "perks": ["AC", "WiFi"],
-    "image": "https://i.ibb.co/example12.jpg",
-    "vendorName": "TR Travels",
-    "vendorEmail": "vendor@trtravels.com"
+    "image": "",
+    "vendorName": "",
+    "vendorEmail": ""
   }
 ]
