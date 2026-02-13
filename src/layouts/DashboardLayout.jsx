@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaAddressCard } from 'react-icons/fa';
+import { FaAddressCard, FaRegBookmark } from 'react-icons/fa';
 import { MdAddBusiness, MdAddCard } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 
@@ -46,6 +46,13 @@ const DashboardLayout = () => {
           
            <MdAddCard />
             <span className="is-drawer-close:hidden">My Added Tickets</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='/dashboard/requestedBookings' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Requested Booking">
+          
+           <FaRegBookmark />
+            <span className="is-drawer-close:hidden">Requested Booking</span>
           </NavLink>
         </li>
 

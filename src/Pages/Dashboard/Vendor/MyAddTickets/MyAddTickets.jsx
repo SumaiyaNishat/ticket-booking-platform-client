@@ -1,6 +1,6 @@
 import React from "react";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../../hooks/useAuth";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdBrowserUpdated } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa";
@@ -110,7 +110,6 @@ const MyAddedTickets = () => {
               </p>
             </div>
 
-           
             <div className="flex justify-between mt-4">
               <button
                 className="btn btn-sm bg-blue-400"

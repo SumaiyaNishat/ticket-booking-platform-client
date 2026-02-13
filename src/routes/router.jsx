@@ -7,65 +7,78 @@ import AuthLayout from "../layouts/AuthLayout";
 import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
-import Vendor from "../Pages/Vendor/Vendor/Vendor";
-import AddTickets from "../Pages/Vendor/AddTickets/AddTickets";
+import Vendor from "../Pages/Dashboard/Vendor/Vendor/Vendor";
+import AddTickets from "../Pages/Dashboard/Vendor/AddTickets/AddTickets";
 import DashboardLayout from "../layouts/DashboardLayout";
-import MyAddedTickets from "../Pages/Vendor/MyAddTickets/MyAddTickets";
-
+import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddTickets/MyAddTickets";
+import RequestedBookings from "../Pages/Dashboard/Vendor/RequestedBookings/RequestedBookings";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-     element: <MainLayout></MainLayout>,
+    element: <MainLayout></MainLayout>,
     children: [
       {
         index: true,
         element: <Home></Home>,
       },
       {
-        path:"allTickets",
-        element: <AllTickets></AllTickets>
+        path: "allTickets",
+        element: <AllTickets></AllTickets>,
       },
       {
-        path:"/ticket/:id",
-        element: <TicketsDetails></TicketsDetails>
+        path: "/ticket/:id",
+        element: <TicketsDetails></TicketsDetails>,
       },
       {
-        path: 'vendor',
-        element:<PrivateRoute><Vendor></Vendor></PrivateRoute>
-      }
-      
-    ]
+        path: "vendor",
+        element: (
+          <PrivateRoute>
+            <Vendor></Vendor>
+          </PrivateRoute>
+        ),
+      },
+    ],
   },
   {
     path: "/",
     element: <AuthLayout></AuthLayout>,
     children: [
       {
-        path: 'login',
-        element: <Login></Login>
+        path: "login",
+        element: <Login></Login>,
       },
       {
-        path: 'register',
-        element: <Register></Register>
-      }
-
-    ]
+        path: "register",
+        element: <Register></Register>,
+      },
+    ],
   },
   {
-    path: '/dashboard',
-    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     children: [
       {
-        path: '/dashboard/addtickets',
-        element:<PrivateRoute><AddTickets></AddTickets></PrivateRoute>,
+        path: "/dashboard/addtickets",
+        element: (
+          <PrivateRoute>
+            <AddTickets></AddTickets>
+          </PrivateRoute>
+        ),
         loader: () => fetch("/tickets.json").then((res) => res.json()),
       },
       {
-        path: '/dashboard/myAddedTickets',
-        element: <MyAddedTickets></MyAddedTickets>
-      }
-      
-    ]
-  }
+        path: "/dashboard/myAddedTickets",
+        element: <MyAddedTickets></MyAddedTickets>,
+      },
+      {
+        path: "/dashboard/requestedBookings",
+        element: <RequestedBookings></RequestedBookings>,
+      },
+    ],
+  },
 ]);

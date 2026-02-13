@@ -1,10 +1,11 @@
 import React from "react";
-import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { useLoaderData } from "react-router";
 import axios from "axios";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useMutation } from "@tanstack/react-query";
 
 const AddTickets = () => {
   const { user } = useAuth();
@@ -52,20 +53,20 @@ const AddTickets = () => {
         image: imageURL,
         vendorName: user.displayName,
         vendorEmail: user.email,
-        status: "pending"
+        status: "pending",
       };
 
       console.log("Final ticket data:", ticketData);
 
       axiosSecure.post("/tickets", ticketData).then((res) => {
         console.log("after adding tickets", res.data);
-          Swal.fire({
-        icon: "success",
-        title: "Ticket Added!",
-        text: "Your ticket is now pending approval.",
-        timer: 2000,
-        showConfirmButton: false,
-      });
+        Swal.fire({
+          icon: "success",
+          title: "Ticket Added!",
+          text: "Your ticket is now pending approval.",
+          timer: 2000,
+          showConfirmButton: false,
+        });
       });
     } catch (error) {
       console.error("Ticket upload failed:", error);

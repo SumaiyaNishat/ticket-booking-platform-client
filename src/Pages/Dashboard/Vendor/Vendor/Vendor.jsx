@@ -8,4 +8,4 @@ const Vendor = () => {
   )
 }
 
-export default Vendor
+export default Vendor;

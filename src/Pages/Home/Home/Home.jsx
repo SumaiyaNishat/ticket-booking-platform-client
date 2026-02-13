@@ -3,6 +3,7 @@ import Banner from '../Banner/Banner'
 import TicketCard from '../../../Components/TicketCard/TicketCard'
 import AdvertisementSection from '../AdvertisementSection/AdvertisementSection'
 import PopularRoutes from '../PopularRoutes/PopularRoutes'
+import LatestTickets from '../LatestTickets/LatestTickets'
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <div>
        <AdvertisementSection></AdvertisementSection>
       </div>
+      <LatestTickets></LatestTickets>
       <PopularRoutes></PopularRoutes>
     </div>
   )
