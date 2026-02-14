@@ -3,6 +3,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyBookedTickets = () => {
 
@@ -101,14 +102,14 @@ const MyBookedTickets = () => {
                   </div>
                 )}
 
-                {/* Pay Button */}
+                
                 {booking.status === "accepted" && !isExpired && (
-                  <button
+                  <Link to=''
                     onClick={() => handlePayment(booking)}
                     className="btn btn-primary mt-4"
                   >
                     Pay Now
-                  </button>
+                  </Link>
                 )}
 
                 {booking.status === "rejected" && (
