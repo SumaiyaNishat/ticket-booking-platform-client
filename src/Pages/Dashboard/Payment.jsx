@@ -1,89 +1,92 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 
 const Payment = () => {
-
   const { bookingId } = useParams();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const [booking, setBooking] = useState(null);
+  const [loading, setLoading] = useState(false);
 
+  // load booking info
   useEffect(() => {
-
-    if (!bookingId) return;
-
     axiosSecure
       .get(`/booking/${bookingId}`)
-      .then(res => {
+      .then((res) => {
         setBooking(res.data);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
-
   }, [bookingId, axiosSecure]);
 
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
 
-  const handleFakePayment = () => {
+      const res = await axiosSecure.post("/create-checkout-session", {
+        bookingId: booking._id,
+        ticketId: booking.ticketId,
+        ticketTitle: booking.ticketTitle,
+        bookingQuantity: booking.bookingQuantity,
+        unitPrice: booking.unitPrice,
+        userEmail: booking.userEmail,
+      });
 
-    axiosSecure.patch(`/bookings/pay/${bookingId}`, {
-      ticketId: booking.ticketId,
-      bookingQuantity: booking.bookingQuantity,
-    })
-    .then(res => {
+      // redirect to Stripe hosted page
+      window.location.replace(res.data.url);
+    } catch (error) {
+      console.error(error);
 
-      if (res.data.success) {
+      Swal.fire("Error", "Payment session failed", "error");
+    }
 
-        Swal.fire(
-          "Success",
-          "Payment completed successfully",
-          "success"
-        );
-
-      }
-
-    });
-
+    setLoading(false);
   };
 
-
   if (!booking) {
-    return <p className="text-center mt-10">Loading...</p>;
+    return <p className="text-center mt-10">Loading payment info...</p>;
   }
 
+  const total = booking.unitPrice * booking.bookingQuantity;
 
   return (
-    <div className="mt-5">
-      <h2 className="text-2xl font-bold mb-4">
-        Payment Page
-      </h2>
-    
-    <div className="max-w-md mx-auto mt-10 card bg-base-100 shadow-xl p-6">
+    <div className="max-w-md mx-auto mt-10 card bg-base-100 shadow-xl">
+      <div className="card-body">
+        <h2 className="text-2xl font-bold">Payment Page</h2>
 
-      
+        <p>
+          Ticket: <strong>{booking.ticketTitle}</strong>
+        </p>
 
-      <p>
-        Ticket: {booking.ticketTitle}
-      </p>
+        <p>
+          Route: {booking.from}
+          {" → "}
+          {booking.to}
+        </p>
 
-      <p>
-        Quantity: {booking.bookingQuantity}
-      </p>
+        <p>Quantity: {booking.bookingQuantity}</p>
 
-      <p>
-        Total: Tk {booking.unitPrice * booking.bookingQuantity}
-      </p>
+        <p className="text-lg font-semibold">Total Amount: Tk {total}</p>
 
-      <button
-        onClick={handleFakePayment}
-        className="btn btn-success mt-4"
-      >
-        Confirm Payment
-      </button>
+        <button
+          onClick={handlePayment}
+          disabled={loading}
+          className="btn btn-primary mt-4"
+        >
+          {loading ? "Redirecting..." : "Confirm Payment"}
+        </button>
 
-    </div>
+        <button
+          onClick={() => navigate("/dashboard/myBookedTickets")}
+          className="btn btn-outline mt-2"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };

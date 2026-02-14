@@ -32,10 +32,23 @@ const MyBookedTickets = () => {
       return;
     }
 
+    
+    axiosSecure.patch(`/bookings/pay/${booking._id}`, {
+      ticketId: booking.ticketId,
+      bookingQuantity: booking.bookingQuantity,
+    })
+    .then(res => {
+      if (res.data.bookingUpdate.modifiedCount > 0) {
+        queryClient.invalidateQueries(["myBookings", user?.email]);
+        Swal.fire("Success!", "Payment completed", "success");
+      }
+    });
+
+
   };
 
   return (
-    <div className="container mx-auto py-10 px-4">
+    <div className="py-10 px-4">
 
       <h2 className="text-3xl font-bold mb-8">
         My Booked Tickets

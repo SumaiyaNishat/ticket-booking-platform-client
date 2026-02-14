@@ -14,6 +14,8 @@ import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddTickets/MyAddTickets"
 import RequestedBookings from "../Pages/Dashboard/Vendor/RequestedBookings/RequestedBookings";
 import MyBookedTickets from "../Pages/Dashboard/User/MyBookedTickets";
 import Payment from "../Pages/Dashboard/Payment";
+import PaymentSuccess from "../Pages/Dashboard/PaymentSuccess";
+import PaymentCancel from "../Pages/Dashboard/PaymentCancel";
 
 export const router = createBrowserRouter([
   {
@@ -30,7 +32,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/ticket/:id",
-        element: <PrivateRoute><TicketsDetails></TicketsDetails></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <TicketsDetails></TicketsDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "vendor",
@@ -82,12 +88,20 @@ export const router = createBrowserRouter([
         element: <RequestedBookings></RequestedBookings>,
       },
       {
-        path: '/dashboard/myBookedTickets',
-        element: <MyBookedTickets></MyBookedTickets>
+        path: "/dashboard/myBookedTickets",
+        element: <MyBookedTickets></MyBookedTickets>,
       },
-        {
-        path: 'payment/:bookingId',
-        element:<Payment></Payment>,
+      {
+        path: "payment/:bookingId",
+        element: <Payment></Payment>,
+      },
+      {
+        path: "payment-success",
+        element: <PaymentSuccess></PaymentSuccess>,
+      },
+      {
+        path: "payment-Cancel",
+        element: <PaymentCancel></PaymentCancel>,
       },
     ],
   },
