@@ -10,7 +10,7 @@ import { Link } from 'react-router';
 const slides = [
   {
     id: 1,
-    image:"https://i.ibb.co.com/zWPsMJPp/ticket-concept-colored-flat-vector-illustration-isolated-638785-4838.jpg",
+    image:"https://i.ibb.co.com/kgh79zxD/ss.png",
     title: "Book Tickets Easily Across Bangladesh",
     subtitle: "Bus, Train, Launch & Flight Tickets in One Platform"
   },

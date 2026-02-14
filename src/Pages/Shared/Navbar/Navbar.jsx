@@ -111,7 +111,7 @@ const Navbar = () => {
             </ul>
           </div>
         ) : (
-          <Link to="/login" className="btn rounded-4xl bg-amber-300 text-white">
+          <Link to="/login" className="btn rounded-4xl bg-teal-300 text-white">
             Login
           </Link>
         )}
@@ -119,7 +119,7 @@ const Navbar = () => {
         {!user && (
           <Link
             to="/register"
-            className="btn rounded-4xl bg-amber-400 text-white"
+            className="btn rounded-4xl bg-teal-400 text-white"
           >
             Register
           </Link>
