@@ -104,7 +104,7 @@ const MyBookedTickets = () => {
 
                 
                 {booking.status === "accepted" && !isExpired && (
-                  <Link to=''
+                  <Link to={`/dashboard/payment/${booking._id}`}
                     onClick={() => handlePayment(booking)}
                     className="btn btn-primary mt-4"
                   >
