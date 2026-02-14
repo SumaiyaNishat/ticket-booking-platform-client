@@ -7,6 +7,8 @@ const TicketCard = ({ ticket }) => {
     _id,
     image,
     title,
+    from,
+    to,
     price,
     quantity,
     transportType,
@@ -28,7 +30,16 @@ const TicketCard = ({ ticket }) => {
           {title}
         </h3>
 
-        <p className="text-sm text-gray-500 mb-2">
+        <div className="flex justify-center gap-4">
+          <p className=" text-sm  pt-2">
+              <span className="font-semibold">From: </span>{from}
+            </p>
+              <p className=" text-sm pt-2">
+              <span className="font-semibold">To: </span>{to}
+            </p>
+        </div>
+
+        <p className="text-sm font-semibold mb-2">
           TransportType: <span className="font-medium">
             {transportType}
           </span>

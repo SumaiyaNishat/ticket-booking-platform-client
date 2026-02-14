@@ -10,7 +10,7 @@ const LatestTickets = () => {
   const { data: tickets = [], loading } = useQuery({
     queryKey: ["latestTickets"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/Tickets");
+      const res = await axiosSecure.get("/latestTickets");
       return res.data;
     },
   });
@@ -28,7 +28,7 @@ const LatestTickets = () => {
         Latest Tickets
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
 
         {tickets.map(ticket => (
           <TicketCard

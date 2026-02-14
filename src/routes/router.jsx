@@ -12,6 +12,7 @@ import AddTickets from "../Pages/Dashboard/Vendor/AddTickets/AddTickets";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddTickets/MyAddTickets";
 import RequestedBookings from "../Pages/Dashboard/Vendor/RequestedBookings/RequestedBookings";
+import MyBookedTickets from "../Pages/Dashboard/User/MyBookedTickets";
 
 export const router = createBrowserRouter([
   {
@@ -28,7 +29,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/ticket/:id",
-        element: <TicketsDetails></TicketsDetails>,
+        element: <PrivateRoute><TicketsDetails></TicketsDetails></PrivateRoute>,
       },
       {
         path: "vendor",
@@ -78,6 +79,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/requestedBookings",
         element: <RequestedBookings></RequestedBookings>,
+      },
+      {
+        path: '/dashboard/myBookedTickets',
+        element: <MyBookedTickets></MyBookedTickets>
+      },
+        {
+        path: 'payment/:parcelId',
+        element:<payment></payment>,
       },
     ],
   },

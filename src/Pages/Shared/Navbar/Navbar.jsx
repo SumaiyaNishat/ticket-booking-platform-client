@@ -50,7 +50,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar bg-base-200 shadow-sm  mb-5">
+    <div className="navbar bg-base-200 shadow-sm mb-8">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -78,9 +78,9 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="flex gap-2 items-center">
-          <FaBusAlt className="text-2xl text-yellow-900" />
-          <Link to="/" className="text-3xl  text-yellow-900 font-semibold">
-            Ticket<span className=" text-orange-700">Bari</span>
+          <FaBusAlt className="text-2xl " />
+          <Link to="/" className="text-2xl  text-teal-600 font-bold">
+            TicketBari
           </Link>
         </div>
       </div>
