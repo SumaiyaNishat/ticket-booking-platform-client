@@ -17,6 +17,7 @@ import Payment from "../Pages/Dashboard/Payment";
 import PaymentSuccess from "../Pages/Dashboard/PaymentSuccess";
 import PaymentCancel from "../Pages/Dashboard/PaymentCancel";
 import TransactionHistory from "../Pages/Dashboard/User/TransactionHistory";
+import ManageTickets from "../Pages/Dashboard/Admin/ManageTickets";
 
 export const router = createBrowserRouter([
   {
@@ -108,6 +109,10 @@ export const router = createBrowserRouter([
         path: "/dashboard/transaction-history",
         element: <TransactionHistory></TransactionHistory>,
       },
+      {
+        path:"/dashboard/manageTickets",
+        element:<ManageTickets></ManageTickets>
+      }
     ],
   },
 ]);

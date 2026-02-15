@@ -22,7 +22,8 @@ const LatestTickets = () => {
     }
 
   return (
-    <div className="py-12 px-4">
+    <div className="bg-teal-50">
+      <div className="w-11/12 mx-auto py-10">
 
       <h2 className="text-3xl font-bold text-center mb-10">
         Latest Tickets
@@ -39,6 +40,7 @@ const LatestTickets = () => {
 
       </div>
 
+    </div>
     </div>
   );
 };
