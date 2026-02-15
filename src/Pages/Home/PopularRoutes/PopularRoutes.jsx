@@ -23,17 +23,18 @@ const routes = [
 
 const PopularRoutes = () => {
   return (
+  
     <section className="py-15 bg-gray-200">
-      <div className="px-4">
+      <div className="px-4 w-10/12 mx-auto">
         <h2 className="text-3xl font-bold text-center mb-2">
           Popular Routes
         </h2>
         <p className="text-center text-gray-500 mb-10">
-          Most booked travel routes by our users. Discover the most trusted routes with frequent departures and <br/>high customer satisfaction.
+          Most booked travel routes by our users. Discover the most trusted routes with frequent <br/> departures and high customer satisfaction.
 Plan your journey faster by choosing routes that thousands of travelers book every day.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {routes.map(item => (
             <div
               key={item.id}

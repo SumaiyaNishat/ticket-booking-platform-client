@@ -1,9 +1,12 @@
 import React from 'react'
 import { FaAddressCard, FaRegBookmark } from 'react-icons/fa';
+import { GrTransaction } from "react-icons/gr";
 import { MdAddBusiness, MdAddCard } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
+import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
+    const [role] = useRole();
   return (
     <div className="drawer lg:drawer-open">
   <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -33,7 +36,29 @@ const DashboardLayout = () => {
           </Link>
         </li>
 
+
+
         <li>
+          <NavLink to='/dashboard/myBookedTickets' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Booked Tickets">
+          
+           <MdAddBusiness />
+            <span className="is-drawer-close:hidden">My Booked Tickets</span>
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink to='/dashboard/transaction-history' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Transaction History">
+          
+         <GrTransaction />
+            <span className="is-drawer-close:hidden">Transaction History</span>
+          </NavLink>
+        </li>
+        
+
+
+        {
+          role === 'vendor' && <>
+           <li>
           <NavLink to='/dashboard/addTickets' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Tickets">
           
            <MdAddBusiness />
@@ -55,6 +80,36 @@ const DashboardLayout = () => {
             <span className="is-drawer-close:hidden">Requested Booking</span>
           </NavLink>
         </li>
+          </>
+        }
+
+
+        {
+          role === 'admin' && <>
+           <li>
+          <NavLink to='/dashboard' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Tickets">
+          
+           <MdAddBusiness />
+            <span className="is-drawer-close:hidden">Add Tickets</span>
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink to='/dashboard/myAddedTickets' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Added Tickets">
+          
+           <MdAddCard />
+            <span className="is-drawer-close:hidden">My Added Tickets</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='/dashboard/requestedBookings' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Requested Booking">
+          
+           <FaRegBookmark />
+            <span className="is-drawer-close:hidden">Requested Booking</span>
+          </NavLink>
+        </li>
+          </>
+        }
 
         {/* List item */}
         <li>
