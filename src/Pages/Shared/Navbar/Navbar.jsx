@@ -20,7 +20,7 @@ const Navbar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            isActive ? "bg-yellow-200 hover:bg-yellow-300 rounded-xl" : ""
+            isActive ? "bg-teal-500 hover:bg-teal-300 rounded-xl" : ""
           }
         >
           Home
@@ -30,7 +30,7 @@ const Navbar = () => {
         <NavLink
           to="/allTickets"
           className={({ isActive }) =>
-            isActive ? "bg-yellow-200 hover:bg-yellow-300 rounded-2xl" : ""
+            isActive ? "bg-teal-500 hover:bg-teal-300 rounded-2xl" : ""
           }
         >
           All Tickets
@@ -40,7 +40,7 @@ const Navbar = () => {
         <NavLink
           to="/dashboard"
           className={({ isActive }) =>
-            isActive ? "bg-yellow-200 hover:bg-yellow-300 rounded-2xl" : ""
+            isActive ? "bg-teal-500 hover:bg-teal-300 rounded-2xl" : ""
           }
         >
           Dashboard
@@ -50,7 +50,8 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar bg-base-200 shadow-sm mb-8">
+    <div className="bg-base-200 shadow-sm">
+      <div className="navbar w-11/12 mx-auto p-3">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -125,6 +126,7 @@ const Navbar = () => {
           </Link>
         )}
       </div>
+    </div>
     </div>
   );
 };
