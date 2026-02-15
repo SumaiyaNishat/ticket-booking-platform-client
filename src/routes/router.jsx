@@ -18,6 +18,10 @@ import PaymentSuccess from "../Pages/Dashboard/PaymentSuccess";
 import PaymentCancel from "../Pages/Dashboard/PaymentCancel";
 import TransactionHistory from "../Pages/Dashboard/User/TransactionHistory";
 import ManageTickets from "../Pages/Dashboard/Admin/ManageTickets";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import AdminRoute from "./AdminRoute";
+import VendorRoute from "./VendorRoute";
+import Profile from "../Pages/Dashboard/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -37,14 +41,6 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <TicketsDetails></TicketsDetails>
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "vendor",
-        element: (
-          <PrivateRoute>
-            <Vendor></Vendor>
           </PrivateRoute>
         ),
       },
@@ -73,21 +69,25 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "/dashboard/profile",
+        element: <Profile />,
+      },
+      {
         path: "/dashboard/addtickets",
         element: (
-          <PrivateRoute>
+          <VendorRoute>
             <AddTickets></AddTickets>
-          </PrivateRoute>
+          </VendorRoute>
         ),
         loader: () => fetch("/tickets.json").then((res) => res.json()),
       },
       {
         path: "/dashboard/myAddedTickets",
-        element: <MyAddedTickets></MyAddedTickets>,
+        element: <VendorRoute><MyAddedTickets></MyAddedTickets></VendorRoute>,
       },
       {
         path: "/dashboard/requestedBookings",
-        element: <RequestedBookings></RequestedBookings>,
+        element: <VendorRoute><RequestedBookings></RequestedBookings></VendorRoute>,
       },
       {
         path: "/dashboard/myBookedTickets",
@@ -110,9 +110,21 @@ export const router = createBrowserRouter([
         element: <TransactionHistory></TransactionHistory>,
       },
       {
-        path:"/dashboard/manageTickets",
-        element:<ManageTickets></ManageTickets>
-      }
+        path: "/dashboard/manageTickets",
+        element: (
+          <AdminRoute>
+            <ManageTickets></ManageTickets>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/manageUsers",
+        element: (
+          <AdminRoute>
+            <ManageUsers></ManageUsers>
+          </AdminRoute>
+        ),
+      },
     ],
   },
 ]);

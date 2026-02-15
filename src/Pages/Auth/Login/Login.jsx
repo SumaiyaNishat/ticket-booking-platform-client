@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const {
@@ -18,13 +19,34 @@ const Login = () => {
 
   const handleLogin = (data) => {
     console.log("after login", data);
+
     signInUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
-        navigate(location?.state || "/");
+
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "Welcome back to TicketBari!",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+
+        setTimeout(() => {
+          navigate(location?.state || "/");
+        }, 2000);
       })
+
       .catch((error) => {
         console.log(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: "Invalid email or password",
+          timer: 2000,
+          showConfirmButton: false,
+        });
       });
   };
 
@@ -53,7 +75,7 @@ const Login = () => {
             <input
               type={passwordShow ? "text" : "password"}
               {...register("password", { required: true })}
-              className="input input-bordered"
+              className="input"
               placeholder="Enter password"
             />
 
@@ -61,7 +83,7 @@ const Login = () => {
               onClick={() => passwordSetShow(!passwordShow)}
               className="absolute right-8 top-[34px] cursor-pointer"
             >
-              {passwordShow ? <FaEye /> : <FaEyeSlash /> }
+              {passwordShow ? <FaEye /> : <FaEyeSlash />}
             </span>
           </div>
           {errors.password?.type === "required" && (

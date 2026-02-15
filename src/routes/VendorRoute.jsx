@@ -3,14 +3,13 @@ import { Navigate, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 
-const AdminRoute = ({ children }) => {
+const VendorRoute = ({ children }) => {
   const { user, loading } = useAuth();
-
   const [role, roleLoading] = useRole();
 
   const location = useLocation();
 
-  // loading state
+  
   if (loading || roleLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -19,15 +18,17 @@ const AdminRoute = ({ children }) => {
     );
   }
 
-  // not logged in
+  
   if (!user) {
     return <Navigate to="/login" state={location.pathname} />;
   }
-  if (role !== "admin") {
+
+  if (role !== "vendor") {
     return <Navigate to="/dashboard" />;
   }
 
+ 
   return children;
 };
 
-export default AdminRoute;
+export default VendorRoute;

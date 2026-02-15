@@ -27,15 +27,17 @@ const TicketCard = ({ ticket }) => {
           </p>
         </div>
 
-        <p className="text-sm font-semibold mb-2">
-          TransportType: <span className="">{transportType}</span>
+        <p className="mb-2"><span className="font-semibold">TransportType: </span>
+           {transportType}
         </p>
 
-        <p className="text-sm mb-1">
+        
+          <p className="text-sm mb-1">
           Price: <span className="font-semibold">Tk {price}</span> / ticket
         </p>
 
-        <p className="text-sm mb-3">Available: {quantity}</p>
+        <p className="text-sm mb-4">Available: {quantity}</p>
+       
 
         <div className="flex flex-wrap gap-2 mb-4">
           {perks?.map((perk, idx) => (

@@ -1,6 +1,7 @@
 import React from 'react'
-import { FaAddressCard, FaRegBookmark } from 'react-icons/fa';
+import { FaAddressCard, FaRegBookmark, FaUserCheck } from 'react-icons/fa';
 import { GrTransaction } from "react-icons/gr";
+import { CgProfile } from "react-icons/cg";
 import { MdAddBusiness, MdAddCard } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import useRole from '../hooks/useRole';
@@ -36,9 +37,17 @@ const DashboardLayout = () => {
           </Link>
         </li>
 
+      <li>
+          <NavLink to='/dashboard/profile' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My profile">
+          
+          <CgProfile />
+            <span className="is-drawer-close:hidden">My Profile</span>
+          </NavLink>
+        </li>
 
-
-        <li>
+        {
+          role === 'user' && <>
+          <li>
           <NavLink to='/dashboard/myBookedTickets' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Booked Tickets">
           
            <MdAddBusiness />
@@ -53,6 +62,8 @@ const DashboardLayout = () => {
             <span className="is-drawer-close:hidden">Transaction History</span>
           </NavLink>
         </li>
+          </>
+        }
         
 
 
@@ -86,28 +97,32 @@ const DashboardLayout = () => {
 
         {
           role === 'admin' && <>
-           <li>
-          <NavLink to='/dashboard' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Tickets">
+            <li>
+          <NavLink to='/dashboard/manageTickets' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Tickets">
           
-           <MdAddBusiness />
-            <span className="is-drawer-close:hidden">Add Tickets</span>
+           <MdAddCard />
+            <span className="is-drawer-close:hidden">Manage Tickets</span>
+          </NavLink>
+        </li>
+           <li>
+          <NavLink to='/dashboard/manageUsers' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Users">
+          
+           <FaUserCheck />
+            <span className="is-drawer-close:hidden">Manage Users</span>
           </NavLink>
         </li>
 
+        
+      
         <li>
-          <NavLink to='/dashboard/myAddedTickets' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Added Tickets">
+          <NavLink to="/dashboard/manageUsers"
+          className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Tickets">
           
-           <MdAddCard />
-            <span className="is-drawer-close:hidden">My Added Tickets</span>
+           
+            <span className="is-drawer-close:hidden">Manage Tickets</span>
           </NavLink>
         </li>
-        <li>
-          <NavLink to='/dashboard/requestedBookings' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Requested Booking">
-          
-           <FaRegBookmark />
-            <span className="is-drawer-close:hidden">Requested Booking</span>
-          </NavLink>
-        </li>
+        
           </>
         }
 
