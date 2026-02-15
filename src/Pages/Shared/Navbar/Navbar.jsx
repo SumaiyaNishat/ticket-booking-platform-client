@@ -104,7 +104,7 @@ const Navbar = () => {
               className="menu dropdown-content bg-base-100 shadow rounded w-40 mt-2"
             >
               <li>
-                <Link to="/profile">My Profile</Link>
+                <Link to="/dashboard/profile">My Profile</Link>
               </li>
               <li>
                 <button onClick={handleLogOut}>Logout</button>

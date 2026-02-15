@@ -1,20 +1,37 @@
-import React from 'react'
-import Container from '../../Shared/Container'
-import TicketCard from '../../../Components/TicketCard/TicketCard'
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import TicketCard from "../../../Components/TicketCard/TicketCard";
 
 const AdvertisementSection = () => {
-  return (
-    
-        <div className='pt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
-        <TicketCard></TicketCard>
-        <TicketCard></TicketCard>
-        <TicketCard></TicketCard>
-        <TicketCard></TicketCard>
-        <TicketCard></TicketCard>
-        <TicketCard></TicketCard>
-        </div>
-    
-  )
-}
+  const axiosSecure = useAxiosSecure();
 
-export default AdvertisementSection
+  const { data: tickets = [], isLoading } = useQuery({
+    queryKey: ["advertisedTickets"],
+
+    queryFn: async () => {
+      const res = await axiosSecure.get("/advertisedTickets");
+
+      return res.data;
+    },
+  });
+
+  if (isLoading)
+    return <span className="loading loading-spinner loading-lg"></span>;
+
+  return (
+   <div className="bg-teal-50 py-10">
+     <div className="w-10/12 mx-auto">
+      <h2 className="text-3xl font-bold text-center mb-6">Advertisement</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {tickets.map((ticket) => (
+          <TicketCard key={ticket._id} ticket={ticket} />
+        ))}
+      </div>
+    </div>
+   </div>
+  );
+};
+
+export default AdvertisementSection;

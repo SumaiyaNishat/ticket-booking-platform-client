@@ -7,7 +7,6 @@ import AuthLayout from "../layouts/AuthLayout";
 import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
-import Vendor from "../Pages/Dashboard/Vendor/Vendor/Vendor";
 import AddTickets from "../Pages/Dashboard/Vendor/AddTickets/AddTickets";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddTickets/MyAddTickets";
@@ -22,6 +21,7 @@ import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import AdminRoute from "./AdminRoute";
 import VendorRoute from "./VendorRoute";
 import Profile from "../Pages/Dashboard/Profile/Profile";
+import AdvertiseTickets from "../Pages/Dashboard/Admin/AdvertiseTickets";
 
 export const router = createBrowserRouter([
   {
@@ -79,15 +79,22 @@ export const router = createBrowserRouter([
             <AddTickets></AddTickets>
           </VendorRoute>
         ),
-        loader: () => fetch("/tickets.json").then((res) => res.json()),
       },
       {
         path: "/dashboard/myAddedTickets",
-        element: <VendorRoute><MyAddedTickets></MyAddedTickets></VendorRoute>,
+        element: (
+          <VendorRoute>
+            <MyAddedTickets></MyAddedTickets>
+          </VendorRoute>
+        ),
       },
       {
         path: "/dashboard/requestedBookings",
-        element: <VendorRoute><RequestedBookings></RequestedBookings></VendorRoute>,
+        element: (
+          <VendorRoute>
+            <RequestedBookings></RequestedBookings>
+          </VendorRoute>
+        ),
       },
       {
         path: "/dashboard/myBookedTickets",
@@ -122,6 +129,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageUsers></ManageUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/advertiseTickets",
+        element: (
+          <AdminRoute>
+            <AdvertiseTickets></AdvertiseTickets>
           </AdminRoute>
         ),
       },
