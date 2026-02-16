@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "ticket-booking-platform-92d4d",
+    "prod": "ticket-booking-platform-92d4d"
+  },
+  "targets": {},
+  "etags": {}
+}

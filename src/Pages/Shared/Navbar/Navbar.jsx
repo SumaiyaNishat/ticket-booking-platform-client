@@ -1,10 +1,12 @@
-import React from "react";
-import { FaBusAlt } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaBusAlt, FaMoon, FaSun } from "react-icons/fa";
 import { Link, NavLink } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 
+
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const [theme, setTheme] = useState("light");
 
   const handleLogOut = () => {
     logOut()
@@ -12,6 +14,21 @@ const Navbar = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+
+    localStorage.setItem("theme", newTheme);
   };
 
   const links = (
@@ -89,6 +106,7 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end flex gap-2">
+        
         {user ? (
           <div className="dropdown dropdown-end">
             <label
@@ -126,6 +144,12 @@ const Navbar = () => {
           </Link>
         )}
       </div>
+      <button
+          onClick={toggleTheme}
+          className="text-xl p-2 ml-2 rounded-full bg-gray-200 dark:bg-gray-700 transition"
+        >
+          {theme === "light" ? <FaMoon /> : <FaSun />}
+        </button>
     </div>
     </div>
   );
