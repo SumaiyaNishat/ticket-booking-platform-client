@@ -1,69 +1,146 @@
-import React from "react";
+import React, { useState} from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router";
+import TicketCard from "../../Components/TicketCard/TicketCard";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 
 const AllTickets = () => {
   const axiosSecure = useAxiosSecure();
 
+
+  const [fromSearch, setFromSearch] = useState("");
+  const [toSearch, setToSearch] = useState("");
+
+  const [debouncedFrom, setDebouncedFrom] = useState("");
+  const [debouncedTo, setDebouncedTo] = useState("");
+
+  const [transportFilter, setTransportFilter] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const ticketsPerPage = 6;
+
+  const handleSearch = () => {
+    setDebouncedFrom(fromSearch);
+    setDebouncedTo(toSearch);
+
+    setCurrentPage(1);
+  };
+
+  // fetch tickets
   const { data: tickets = [], isLoading } = useQuery({
-    queryKey: ["approvedTickets"],
+    queryKey: [
+      "tickets",
+      debouncedFrom,
+      debouncedTo,
+      transportFilter,
+      sortOrder,
+    ],
 
     queryFn: async () => {
-      const res = await axiosSecure.get("/tickets");
+      const res = await axiosSecure.get(
+        `/tickets?from=${debouncedFrom}&to=${debouncedTo}&transportType=${transportFilter}&sort=${sortOrder}`,
+      );
 
       return res.data;
     },
   });
 
+  const indexOfLast = currentPage * ticketsPerPage;
+  const indexOfFirst = indexOfLast - ticketsPerPage;
+
+  const currentTickets = tickets.slice(indexOfFirst, indexOfLast);
+
+  const totalPages = Math.ceil(tickets.length / ticketsPerPage);
+
+  // loading spinner
   if (isLoading) {
-    return <div className="text-center mt-10">loading...</div>;
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-4">
-      <h2 className="text-3xl font-bold mb-6">All Tickets</h2>
+    <div className="max-w-7xl mx-auto p-5">
+      <h2 className="text-3xl font-bold text-center mb-5">All Tickets</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {tickets.map((ticket) => (
-          <div key={ticket._id} className="card bg-base-100 shadow-lg">
-            <figure>
-              <img
-                src={ticket.image}
-                alt={ticket.title}
-                className="h-48 w-full object-cover"
-              />
-            </figure>
+      <div className="flex gap-2 justify-between items-center pt-10">
+        <p className="font-bold">Tickets available: {tickets.length}</p>
 
-            <div className="card-body">
-              <h2 className="card-title">{ticket.title}</h2>
+        <select
+          value={sortOrder}
+          onChange={(e) => {
+            setSortOrder(e.target.value);
+            setCurrentPage(1);
+          }}
+          className="select select-bordered"
+        >
+          <option value="">Sort by price</option>
+          <option value="low">Low to High</option>
+          <option value="high">High to Low</option>
+        </select>
+      </div>
 
-              <p>
-                {ticket.from} → {ticket.to}
-              </p>
+      <div className="flex justify-between mt-5 mb-5">
+        <div className="flex gap-2 items-center">
+          <input
+            type="text"
+            placeholder="From"
+            value={fromSearch}
+            onChange={(e) => setFromSearch(e.target.value)}
+            className="input input-bordered"
+          />
 
-              <p>Transport: {ticket.transportType}</p>
+          <input
+            type="text"
+            placeholder="To"
+            value={toSearch}
+            onChange={(e) => setToSearch(e.target.value)}
+            className="input input-bordered"
+          />
 
-              <p>Price: Tk {ticket.price}</p>
+          <button onClick={handleSearch} className="btn bg-teal-600 text-white">
+            Search
+          </button>
+        </div>
+        <div>
+          <select
+            value={transportFilter}
+            onChange={(e) => {
+              setTransportFilter(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="select select-bordered"
+          >
+            <option value="">All Transport</option>
 
-              <p>Available: {ticket.quantity}</p>
+            <option value="Bus">Bus</option>
 
-              {/* perks */}
-              <div className="flex flex-wrap gap-2">
-                {ticket.perks?.map((perk, i) => (
-                  <span key={i} className="badge badge-outline">
-                    {perk}
-                  </span>
-                ))}
-              </div>
+            <option value="Train">Train</option>
 
-              <Link to={`/ticket/${ticket._id}`}>
-                <button className="btn btn-primary w-full mt-3">
-                  See Details
-                </button>
-              </Link>
-            </div>
-          </div>
+            <option value="Plane">Plane</option>
+
+            <option value="Launch">Launch</option>
+          </select>
+        </div>
+      </div>
+
+      {/* tickets */}
+      <div className="grid md:grid-cols-4 gap-4">
+        {currentTickets.map((ticket) => (
+          <TicketCard key={ticket._id} ticket={ticket} />
+        ))}
+      </div>
+
+      <div className="flex justify-center mt-6 gap-2">
+        {[...Array(totalPages).keys()].map((number) => (
+          <button
+            key={number}
+            onClick={() => setCurrentPage(number + 1)}
+            className={`btn btn-sm ${
+              currentPage === number + 1 ? "btn-primary" : "btn-outline"
+            }`}
+          >
+            {number + 1}
+          </button>
         ))}
       </div>
     </div>
