@@ -2,12 +2,13 @@ import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import TicketCard from "../../../Components/TicketCard/TicketCard";
+import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
 
 const LatestTickets = () => {
 
   const axiosSecure = useAxiosSecure();
 
-  const { data: tickets = [], loading } = useQuery({
+  const { data: tickets = [], isLoading } = useQuery({
     queryKey: ["latestTickets"],
     queryFn: async () => {
       const res = await axiosSecure.get("/latestTickets");
@@ -15,11 +16,8 @@ const LatestTickets = () => {
     },
   });
 
- if(loading){
-        return<div>
-            <span className="loading loading-infinity loading-xl"></span>
-        </div>
-    }
+ if(isLoading) return <LoadingSpinner></LoadingSpinner>
+    
 
   return (
     <div className="bg-teal-50">

@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import TicketCard from "../../../Components/TicketCard/TicketCard";
+import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
 
 const AdvertisementSection = () => {
   const axiosSecure = useAxiosSecure();
@@ -17,7 +18,7 @@ const AdvertisementSection = () => {
   });
 
   if (isLoading)
-    return <span className="loading loading-spinner loading-lg"></span>;
+    return <LoadingSpinner></LoadingSpinner>
 
   return (
    <div className="bg-teal-50 py-10">
