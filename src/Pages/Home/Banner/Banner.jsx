@@ -52,7 +52,7 @@ const Banner = () => {
                 {slide.subtitle}
               </p>
               <Link to="/alltickets">
-                <button className="mt-6 px-6 py-3 rounded-lg bg-primary hover:bg-primary/90 transition">
+                <button className="mt-6 px-6 py-3 rounded-lg bg-teal-700 hover:bg-teal-500/90 cursor-pointer transition">
                   Explore Tickets
                 </button>
               </Link>

@@ -6,15 +6,17 @@ import { MdBrowserUpdated } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const MyAddedTickets = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { data: tickets = [] } = useQuery({
     queryKey: ["myAddedTickets", user?.email],
-    enabled: !!user?.email, 
+    enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`/tickets?vendorEmail=${user.email}`);
       return res.data;
@@ -51,7 +53,9 @@ const MyAddedTickets = () => {
 
   return (
     <div className="w-10/12 mx-auto">
-      <h2 className="text-2xl font-bold mt-5 text-center mb-10">My Added Tickets</h2>
+      <h2 className="text-2xl font-bold mt-5 text-center mb-10">
+        My Added Tickets
+      </h2>
 
       <h2 className="text-2xl font-bold mb-6  ">
         All of my added tickets : {tickets.length}
@@ -113,6 +117,9 @@ const MyAddedTickets = () => {
 
             <div className="flex justify-between mt-4">
               <button
+                onClick={() =>
+                  navigate(`/dashboard/updateTicket/${ticket._id}`)
+                }
                 className="btn btn-sm bg-blue-400"
                 disabled={ticket.status === "rejected"}
               >

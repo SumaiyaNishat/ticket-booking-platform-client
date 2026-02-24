@@ -13,7 +13,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const [passwordShow, passwordSetShow] = useState(false);
-  const { signInUser } = useAuth();
+  const { signInUser, setUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -24,11 +24,13 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
 
+        setUser(result.user);
+
         Swal.fire({
           icon: "success",
           title: "Login Successful",
           text: "Welcome back to TicketBari!",
-          timer: 2000,
+          timer: 1000,
           showConfirmButton: false,
         });
 
@@ -44,15 +46,15 @@ const Login = () => {
           icon: "error",
           title: "Login Failed",
           text: "Invalid email or password",
-          timer: 2000,
+          timer: 1500,
           showConfirmButton: false,
         });
       });
   };
 
   return (
-    <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
-      <h3 className="text-3xl text-center">Welcome Back TicketBari</h3>
+    <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl p-4 sm:p-6">
+      <h3 className="text-2xl text-center">Welcome Back TicketBari</h3>
       <p className="text-center">Please Login</p>
       <form className="card-body" onSubmit={handleSubmit(handleLogin)}>
         <fieldset className="fieldset">
@@ -60,7 +62,7 @@ const Login = () => {
           <input
             type="email"
             {...register("email", { required: true })}
-            className="input"
+            className="input input-bordered w-full"
             placeholder="Email"
           />
           {errors.email?.type === "required" && (
@@ -75,13 +77,13 @@ const Login = () => {
             <input
               type={passwordShow ? "text" : "password"}
               {...register("password", { required: true })}
-              className="input"
+              className="input input-bordered w-full"
               placeholder="Enter password"
             />
 
             <span
               onClick={() => passwordSetShow(!passwordShow)}
-              className="absolute right-8 top-[34px] cursor-pointer"
+              className="absolute right-3 top-[38px] cursor-pointer"
             >
               {passwordShow ? <FaEye /> : <FaEyeSlash />}
             </span>
@@ -101,10 +103,10 @@ const Login = () => {
             </p>
           )}
 
-          <div className="flex justify-start">
+          <div className="flex">
             <a className="link link-hover">Forgot password?</a>
           </div>
-          <button className="btn btn-neutral mt-4">Login</button>
+          <button className="btn btn-neutral mt-4 w-full">Login</button>
         </fieldset>
         <p>
           New to TicketBari{" "}

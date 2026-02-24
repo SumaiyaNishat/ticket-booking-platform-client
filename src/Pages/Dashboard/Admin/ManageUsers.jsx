@@ -60,7 +60,7 @@ const ManageUsers = () => {
   };
 
   if (isLoading) {
-    return <LoadingSpinner></LoadingSpinner>
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
   return (
@@ -73,28 +73,19 @@ const ManageUsers = () => {
           <thead>
             <tr>
               <th>No</th>
-
               <th>Name</th>
-
               <th>Email</th>
-
               <th>Role</th>
-
               <th>Actions</th>
             </tr>
           </thead>
-
-          {/* body */}
           <tbody>
             {users.map((user, index) => (
               <tr key={user._id}>
                 <th>{index + 1}</th>
 
                 <td>{user.name || user.displayName}</td>
-
                 <td>{user.email}</td>
-
-                {/* role badge */}
                 <td>
                   <span
                     className={`badge
@@ -111,7 +102,6 @@ const ManageUsers = () => {
                   </span>
                 </td>
 
-                {/* action buttons */}
                 <td className="space-x-2">
                   <button
                     onClick={() => handleMakeAdmin(user._id)}

@@ -8,11 +8,7 @@ const Navbar = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   const handleLogOut = () => {
-    logOut()
-      .then()
-      .catch((error) => {
-        console.log(error);
-      });
+    logOut().catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -23,6 +19,9 @@ const Navbar = () => {
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
+
+  const navLinkStyle = ({ isActive }) =>
+    isActive ? "bg-teal-500 text-white rounded-xl px-3 py-1" : "px-3 py-1";
 
   const links = (
     <>
@@ -58,12 +57,13 @@ const Navbar = () => {
       </li>
     </>
   );
+
   return (
-    <div className="bg-base-200 shadow-sm">
+    <div className="bg-base-200 shadow-sm sticky top-0 z-50">
       <div className="navbar max-w-7xl mx-auto px-3">
         <div className="navbar-start">
-          <div className="dropdown relative">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <div className="dropdown">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -71,46 +71,56 @@ const Navbar = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                {" "}
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
+                />
               </svg>
-            </div>
+            </label>
+
             <ul
-              tabIndex="0"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[100] p-2 shadow bg-base-100 rounded-box w-52"
             >
               {links}
             </ul>
           </div>
-          <div className="flex gap-2 items-center">
-            <FaBusAlt className="text-2xl " />
-            <Link to="/" className="text-2xl  text-teal-600 font-bold">
-              TicketBari
-            </Link>
-          </div>
+
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-2xl font-bold text-teal-600"
+          >
+            <FaBusAlt />
+            TicketBari
+          </Link>
         </div>
+
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
+          <ul className="menu menu-horizontal gap-2">{links}</ul>
         </div>
-        <div className="navbar-end flex gap-2">
+
+        <div className="navbar-end flex items-center gap-2">
           {user ? (
             <div className="dropdown dropdown-end">
               <label
                 tabIndex={0}
                 className="flex items-center gap-2 cursor-pointer"
               >
-                <img src={user.photoURL} className="w-8 h-8 rounded-full" />
-                <span className="hidden sm:block">{user.displayName}</span>
+                <img
+                  src={user.photoURL}
+                  alt="user"
+                  className="w-8 h-8 rounded-full border"
+                />
+                <span className="hidden md:block font-medium">
+                  {user.displayName}
+                </span>
               </label>
 
               <ul
                 tabIndex={0}
-                className="menu dropdown-content bg-base-100 shadow rounded w-40 mt-2"
+                className="menu dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-44 z-[100]"
               >
                 <li>
                   <Link to="/dashboard/profile">My Profile</Link>
@@ -121,29 +131,30 @@ const Navbar = () => {
               </ul>
             </div>
           ) : (
-            <Link
-              to="/login"
-              className="btn rounded-4xl bg-teal-300 text-white"
-            >
-              Login
-            </Link>
+            <>
+              <Link
+                className="btn bg-teal-500 text-white rounded-full px-5"
+                to="/login"
+              >
+                Login
+              </Link>
+
+              <Link
+                className="btn bg-teal-400 text-white rounded-full px-5 hidden sm:flex"
+                to="/register"
+              >
+                Register
+              </Link>
+            </>
           )}
 
-          {!user && (
-            <Link
-              to="/register"
-              className="btn rounded-4xl bg-teal-400 text-white"
-            >
-              Register
-            </Link>
-          )}
+          <button
+            onClick={toggleTheme}
+            className="btn btn-ghost btn-circle text-xl"
+          >
+            {theme === "light" ? <FaMoon /> : <FaSun />}
+          </button>
         </div>
-        <button
-          onClick={toggleTheme}
-          className="text-xl p-2 rounded-full bg-base-300 hover:bg-base-100 ml-2 cursor-pointer transition"
-        >
-          {theme === "light" ? <FaMoon /> : <FaSun />}
-        </button>
       </div>
     </div>
   );

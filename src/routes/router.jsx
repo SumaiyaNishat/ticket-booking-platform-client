@@ -23,6 +23,7 @@ import VendorRoute from "./VendorRoute";
 import Profile from "../Pages/Dashboard/Profile/Profile";
 import AdvertiseTickets from "../Pages/Dashboard/Admin/AdvertiseTickets";
 import Revenue from "../Pages/Dashboard/Vendor/Revenue/Revenue";
+import UpdateTicket from "../Pages/Dashboard/Vendor/UpdateTicket/UpdateTicket";
 
 export const router = createBrowserRouter([
   {
@@ -86,6 +87,14 @@ export const router = createBrowserRouter([
         element: (
           <VendorRoute>
             <MyAddedTickets></MyAddedTickets>
+          </VendorRoute>
+        ),
+      },
+      {
+        path: "/dashboard/updateTicket/:id",
+        element: (
+          <VendorRoute>
+            <UpdateTicket></UpdateTicket>
           </VendorRoute>
         ),
       },

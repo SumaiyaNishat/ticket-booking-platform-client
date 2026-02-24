@@ -37,15 +37,21 @@ const Revenue = () => {
 
   const chartData = [
     {
-      name: "Overview",
-      Revenue: data.totalRevenue || 0,
-      Sold: data.totalTicketsSold || 0,
-      Added: data.totalTicketsAdded || 0,
+      name: "Revenue",
+      value: data.totalRevenue / 1000,
+    },
+    {
+      name: "Sold",
+      value: data.totalTicketsSold,
+    },
+    {
+      name: "Added",
+      value: data.totalTicketsAdded,
     },
   ];
 
   return (
-    <div className="p-6 w-11/12 mx-auto">
+    <div className="p-6 w-10/12 mx-auto">
       <h2 className="text-3xl font-bold mb-6">Revenue Overview</h2>
 
       {/* cards */}
@@ -83,22 +89,15 @@ const Revenue = () => {
 
             <XAxis dataKey="name" />
 
-            <YAxis />
+            <YAxis label={{ value: "Value (Revenue)", angle: -90 }} />
 
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "#1f2937",
-                color: "#fff",
-                borderRadius: "8px",
-                border: "none",
-              }}
-            />
+            <Tooltip />
 
-            <Bar dataKey="Revenue" fill="#14b8a6" radius={[10, 10, 0, 0]} />
-
-            <Bar dataKey="Sold" fill="#3b82f6" radius={[10, 10, 0, 0]} />
-
-            <Bar dataKey="Added" fill="#f59e0b" radius={[10, 10, 0, 0]} />
+            <Bar dataKey="value" radius={[10, 10, 0, 0]}>
+              <Cell fill="#14b8a6" />
+              <Cell fill="#3b82f6" />
+              <Cell fill="#f59e0b" />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
