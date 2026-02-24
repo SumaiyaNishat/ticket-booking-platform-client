@@ -10,7 +10,7 @@ const ManageTickets = () => {
     queryKey: ["allTickets"],
 
     queryFn: async () => {
-      const res = await axiosSecure.get("/tickets");
+      const res = await axiosSecure.get("/admin/tickets");
 
       return res.data;
     },
@@ -35,7 +35,7 @@ const ManageTickets = () => {
   };
 
   return (
-    <div className="overflow-x-auto">
+    <div className="p-10">
       <h2 className="text-3xl font-bold mb-4">Manage Tickets</h2>
 
       <table className="table">

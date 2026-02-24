@@ -22,6 +22,7 @@ import AdminRoute from "./AdminRoute";
 import VendorRoute from "./VendorRoute";
 import Profile from "../Pages/Dashboard/Profile/Profile";
 import AdvertiseTickets from "../Pages/Dashboard/Admin/AdvertiseTickets";
+import Revenue from "../Pages/Dashboard/Vendor/Revenue/Revenue";
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +94,14 @@ export const router = createBrowserRouter([
         element: (
           <VendorRoute>
             <RequestedBookings></RequestedBookings>
+          </VendorRoute>
+        ),
+      },
+      {
+        path: "/dashboard/revenue",
+        element: (
+          <VendorRoute>
+            <Revenue></Revenue>
           </VendorRoute>
         ),
       },

@@ -5,6 +5,7 @@ import axios from "axios";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../../../../Components/LoadingSpinner/LoadingSpinner";
 
 const AddTickets = () => {
   const { user } = useAuth();
@@ -16,37 +17,51 @@ const AddTickets = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm();
 
   const { data: tickets = [], isLoading } = useQuery({
     queryKey: ["tickets"],
-
     queryFn: async () => {
       const res = await axiosSecure.get("/tickets");
-
       return res.data;
     },
   });
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
-  const froms = [...new Set(tickets.map((t) => t.from))];
+  const defaultDistricts = [
+    "Dhaka",
+    "Chittagong",
+    "Cox's Bazar",
+    "Sylhet",
+    "Rajshahi",
+    "Khulna",
+    "Barisal",
+    "Rangpur",
+    "Mymensingh",
+    "Comilla",
+    "Narayanganj",
+  ];
 
-  const tos = [...new Set(tickets.map((t) => t.to))];
+  const selectedFrom = watch("from");
+  const selectedTo = watch("to");
+
+  const froms = [
+    ...new Set([...defaultDistricts, ...tickets.map((t) => t.from)]),
+  ].filter((district) => district !== selectedTo);
+
+  const tos = [
+    ...new Set([...defaultDistricts, ...tickets.map((t) => t.to)]),
+  ].filter((district) => district !== selectedFrom);
 
   const handleAddTickets = async (data) => {
     try {
-      // upload image
       const imageFile = data.image[0];
 
       const formData = new FormData();
-
       formData.append("image", imageFile);
 
       const imageAPI = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host}`;
@@ -55,36 +70,21 @@ const AddTickets = () => {
 
       const imageURL = imageRes.data.data.url;
 
-      // ticket object
       const ticketData = {
         title: data.title,
-
         from: data.from,
-
         to: data.to,
-
         transportType: data.transportType,
-
         price: Number(data.price),
-
         quantity: Number(data.quantity),
-
         departureDate: data.departureDate,
-
         departureTime: data.departureTime,
-
         perks: data.perks || [],
-
         image: imageURL,
-
         vendorName: user.displayName,
-
         vendorEmail: user.email,
-
         status: "pending",
-
         isAdvertised: false,
-
         createdAt: new Date(),
       };
 
@@ -93,13 +93,9 @@ const AddTickets = () => {
       if (res.data.insertedId) {
         Swal.fire({
           icon: "success",
-
           title: "Ticket Added",
-
           text: "Waiting for admin approval",
-
-          timer: 2000,
-
+          timer: 1500,
           showConfirmButton: false,
         });
 
@@ -107,130 +103,181 @@ const AddTickets = () => {
       }
     } catch (error) {
       console.error(error);
-
       Swal.fire("Error", "Ticket add failed", "error");
     }
   };
 
   return (
-    <div className="pt-10 pb-10 bg-gray-200">
+    <div className="pt-10 pb-10 bg-teal-50">
       <div className="max-w-2xl mx-auto p-6 bg-white shadow rounded">
-        <h2 className="text-2xl font-bold mb-4">Add Ticket</h2>
+        <h2 className="text-2xl text-center font-bold mb-4">Add Ticket</h2>
+        <p className="text-gray-600 text-center mb-8">
+          Fill in the form below to add a new ticket. Make sure all <br />{" "}
+          information is accurate. Your ticket will be pending until admin
+          approval.
+        </p>
 
-        <form onSubmit={handleSubmit(handleAddTickets)} className="space-y-3">
-          <input
-            {...register("title", { required: true })}
-            placeholder="Ticket Title"
-            className="input w-full"
-          />
-
-          {errors.title && <p className="text-red-500">Title required</p>}
+        <form onSubmit={handleSubmit(handleAddTickets)} className="space-y-4">
+          <div>
+            <label className="label font-semibold">Ticket Title</label>
+            <input
+              {...register("title", { required: true })}
+              placeholder="Enter ticket title"
+              className="input w-full"
+            />
+            {errors.title && (
+              <p className="text-red-500 text-sm">Title required</p>
+            )}
+          </div>
 
           <div className="flex gap-3">
+            <div className="w-full">
+              <label className="label font-semibold">From (Location)</label>
+              <select
+                {...register("from", { required: true })}
+                className="select w-full"
+              >
+                <option value="">Select departure location</option>
+                {froms.map((f, i) => (
+                  <option key={i} value={f}>
+                    {f}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="w-full">
+              <label className="label font-semibold">To (Location)</label>
+              <select
+                {...register("to", { required: true })}
+                className="select w-full"
+              >
+                <option value="">Select destination</option>
+                {tos.map((t, i) => (
+                  <option key={i} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="label font-semibold">Transport Type</label>
             <select
-              {...register("from", { required: true })}
+              {...register("transportType", { required: true })}
               className="select w-full"
             >
-              <option value="">From</option>
-
-              {froms.map((f, i) => (
-                <option key={i}>{f}</option>
-              ))}
-            </select>
-
-            <select
-              {...register("to", { required: true })}
-              className="select w-full"
-            >
-              <option value="">To</option>
-
-              {tos.map((t, i) => (
-                <option key={i}>{t}</option>
-              ))}
+              <option value="">Select transport type</option>
+              <option>Bus</option>
+              <option>Train</option>
+              <option>Launch</option>
+              <option>Plane</option>
             </select>
           </div>
 
-          <select
-            {...register("transportType", { required: true })}
-            className="select w-full"
-          >
-            <option value="">Select Transport</option>
-
-            <option>Bus</option>
-
-            <option>Train</option>
-
-            <option>Launch</option>
-
-            <option>Plane</option>
-          </select>
-
           <div className="flex gap-3">
-            <input
-              type="number"
-              {...register("price", { required: true })}
-              placeholder="Price"
-              className="input w-full"
-            />
+            <div className="w-full">
+              <label className="label font-semibold">Price (per unit)</label>
+              <input
+                type="number"
+                {...register("price", { required: true })}
+                placeholder="Enter price"
+                className="input w-full"
+              />
+            </div>
 
-            <input
-              type="number"
-              {...register("quantity", { required: true })}
-              placeholder="Quantity"
-              className="input w-full"
-            />
+            <div className="w-full">
+              <label className="label font-semibold">Ticket Quantity</label>
+              <input
+                type="number"
+                {...register("quantity", { required: true })}
+                placeholder="Enter quantity"
+                className="input w-full"
+              />
+            </div>
           </div>
 
           <div className="flex gap-3">
-            <input
-              type="date"
-              {...register("departureDate", { required: true })}
-              className="input w-full"
-            />
+            <div className="w-full">
+              <label className="label font-semibold">Departure Date</label>
+              <input
+                type="date"
+                {...register("departureDate", { required: true })}
+                className="input w-full"
+              />
+            </div>
 
+            <div className="w-full">
+              <label className="label font-semibold">Departure Time</label>
+              <input
+                type="time"
+                {...register("departureTime", { required: true })}
+                className="input w-full"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="label font-semibold">Perks</label>
+
+            <div className="flex gap-4 flex-wrap">
+              <label className="flex items-center gap-1">
+                <input type="checkbox" value="AC" {...register("perks")} />
+                AC
+              </label>
+
+              <label className="flex items-center gap-1">
+                <input type="checkbox" value="WiFi" {...register("perks")} />
+                WiFi
+              </label>
+
+              <label className="flex items-center gap-1">
+                <input
+                  type="checkbox"
+                  value="Breakfast"
+                  {...register("perks")}
+                />
+                Breakfast
+              </label>
+
+              <label className="flex items-center gap-1">
+                <input type="checkbox" value="Cabin" {...register("perks")} />
+                Cabin
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label className="label font-semibold">Ticket Image</label>
             <input
-              type="time"
-              {...register("departureTime", { required: true })}
-              className="input w-full"
+              type="file"
+              {...register("image", { required: true })}
+              className="file-input w-full"
             />
           </div>
 
-          <div className="flex gap-4">
-            <label>
-              <input type="checkbox" value="AC" {...register("perks")} />
-              AC
-            </label>
-
-            <label>
-              <input type="checkbox" value="WiFi" {...register("perks")} />
-              WiFi
-            </label>
-
-            <label>
-              <input type="checkbox" value="Breakfast" {...register("perks")} />
-              Breakfast
-            </label>
+          <div>
+            <label className="label font-semibold">Vendor Name</label>
+            <input
+              value={user.displayName}
+              readOnly
+              className="input w-full bg-gray-100"
+            />
           </div>
 
-          <input
-            type="file"
-            {...register("image", { required: true })}
-            className="file-input w-full"
-          />
+          <div>
+            <label className="label font-semibold">Vendor Email</label>
+            <input
+              value={user.email}
+              readOnly
+              className="input w-full bg-gray-100"
+            />
+          </div>
 
-          <input
-            value={user.displayName}
-            readOnly
-            className="input w-full bg-gray-100"
-          />
-
-          <input
-            value={user.email}
-            readOnly
-            className="input w-full bg-gray-100"
-          />
-
-          <button className="btn btn-neutral w-full">Add Ticket</button>
+          <button className="btn bg-teal-700 text-white w-full">
+            Add Ticket
+          </button>
         </form>
       </div>
     </div>

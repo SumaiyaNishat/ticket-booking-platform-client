@@ -1,5 +1,5 @@
 import React from "react";
-import { FaAddressCard, FaRegBookmark, FaUserCheck } from "react-icons/fa";
+import { FaAddressCard, FaRegBookmark, FaSearchDollar, FaUserCheck } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
 import { CgProfile } from "react-icons/cg";
 import { MdAddBusiness, MdAddCard } from "react-icons/md";
@@ -150,6 +150,18 @@ const DashboardLayout = () => {
                     <FaRegBookmark />
                     <span className="is-drawer-close:hidden">
                       Requested Booking
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/revenue"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Revenue"
+                  >
+                    <FaSearchDollar />
+                    <span className="is-drawer-close:hidden">
+                      Revenue
                     </span>
                   </NavLink>
                 </li>

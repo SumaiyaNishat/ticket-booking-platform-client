@@ -60,9 +60,9 @@ const Navbar = () => {
   );
   return (
     <div className="bg-base-200 shadow-sm">
-      <div className="navbar w-11/12 mx-auto p-3">
+      <div className="navbar max-w-7xl mx-auto px-3">
         <div className="navbar-start">
-          <div className="dropdown">
+          <div className="dropdown relative">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +81,7 @@ const Navbar = () => {
               </svg>
             </div>
             <ul
-              tabIndex="-1"
+              tabIndex="0"
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               {links}
@@ -105,7 +105,7 @@ const Navbar = () => {
                 className="flex items-center gap-2 cursor-pointer"
               >
                 <img src={user.photoURL} className="w-8 h-8 rounded-full" />
-                <span>{user.displayName}</span>
+                <span className="hidden sm:block">{user.displayName}</span>
               </label>
 
               <ul

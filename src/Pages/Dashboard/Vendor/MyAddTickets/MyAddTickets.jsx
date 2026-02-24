@@ -12,8 +12,9 @@ const MyAddedTickets = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
-  const { data: tickets = [], refetch } = useQuery({
+  const { data: tickets = [] } = useQuery({
     queryKey: ["myAddedTickets", user?.email],
+    enabled: !!user?.email, 
     queryFn: async () => {
       const res = await axiosSecure.get(`/tickets?vendorEmail=${user.email}`);
       return res.data;
@@ -49,10 +50,10 @@ const MyAddedTickets = () => {
   };
 
   return (
-    <div className="ml-5">
-      <h2 className="text-2xl font-bold mb-6">My Added Tickets</h2>
+    <div className="w-10/12 mx-auto">
+      <h2 className="text-2xl font-bold mt-5 text-center mb-10">My Added Tickets</h2>
 
-      <h2 className="text-2xl font-bold mb-6 text-left ">
+      <h2 className="text-2xl font-bold mb-6  ">
         All of my added tickets : {tickets.length}
       </h2>
 

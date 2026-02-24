@@ -2,6 +2,7 @@ import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -59,7 +60,7 @@ const ManageUsers = () => {
   };
 
   if (isLoading) {
-    return <div className="text-center mt-10">loading...</div>;
+    return <LoadingSpinner></LoadingSpinner>
   }
 
   return (
