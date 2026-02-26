@@ -1,16 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import Swal from "sweetalert2";
 import LoadingSpinner from "../../../../Components/LoadingSpinner/LoadingSpinner";
+import Swal from "sweetalert2";
 
 const UpdateTicket = () => {
   const { id } = useParams();
-
   const navigate = useNavigate();
-
   const axiosSecure = useAxiosSecure();
 
   const { register, handleSubmit, reset } = useForm();
@@ -18,40 +16,65 @@ const UpdateTicket = () => {
   // fetch ticket data
   const { data: ticket = {}, isLoading } = useQuery({
     queryKey: ["ticket", id],
-
     queryFn: async () => {
       const res = await axiosSecure.get(`/tickets/${id}`);
-
-      reset(res.data);
-
       return res.data;
     },
   });
 
+ useEffect(() => {
+
+  if (ticket && Object.keys(ticket).length > 0) {
+
+    reset({
+      title: ticket.title || "",
+      from: ticket.from || "",
+      to: ticket.to || "",
+      transportType: ticket.transportType || "",
+      price: ticket.price || "",
+      quantity: ticket.quantity || "",
+      departureDate: ticket.departureDate || "",
+      departureTime: ticket.departureTime || "",
+      perks: ticket.perks || [],
+    });
+
+  }
+
+}, [ticket]);
+
   if (isLoading) return <LoadingSpinner />;
 
-  
-  const onSubmit = async (data) => {
-    const res = await axiosSecure.patch(`/ticket/${id}`, data);
+  const handleUpdateTicket = async (data) => {
+    try {
+      const res = await axiosSecure.patch(`/tickets/${id}`, data);
 
-    if (res.data.modifiedCount > 0) {
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          icon: "success",
+          title: "Ticket Updated Successfully",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+
+        navigate("/dashboard/myAddedTickets");
+      }
+    } catch (error) {
+      console.log(error);
+
       Swal.fire({
-        icon: "success",
-        title: "Ticket Updated Successfully",
-        timer: 1500,
-        showConfirmButton: false,
+        icon: "error",
+        title: "Update Failed",
       });
-      navigate("/dashboard/myAddedTickets");
     }
   };
 
   return (
-    <div className="bg-teal-50 p-5">
+    <div className="bg-teal-50 p-20">
       <div className="max-w-xl mx-auto p-6 card bg-base-100 shadow rounded">
         <h2 className="text-2xl text-center font-bold mb-4">Update Ticket</h2>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          
+       
+        <form onSubmit={handleSubmit(handleUpdateTicket)} className="space-y-4">
           <div>
             <label className="label font-semibold">Ticket Title</label>
             <input
@@ -95,57 +118,23 @@ const UpdateTicket = () => {
             </select>
           </div>
 
-          {/* Price and Quantity */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="label font-semibold">Price (per unit)</label>
+              <label className="label font-semibold">Price</label>
               <input
                 {...register("price")}
                 type="number"
                 className="input input-bordered w-full"
-                placeholder="Price"
               />
             </div>
 
             <div>
-              <label className="label font-semibold">Ticket Quantity</label>
+              <label className="label font-semibold">Quantity</label>
               <input
                 {...register("quantity")}
                 type="number"
                 className="input input-bordered w-full"
-                placeholder="Quantity"
               />
-            </div>
-          </div>
-
-          {/* Perks */}
-          <div>
-            <label className="label font-semibold">Perks</label>
-
-            <div className="flex gap-4 flex-wrap">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" value="AC" {...register("perks")} />
-                AC
-              </label>
-
-              <label className="flex items-center gap-2">
-                <input type="checkbox" value="WiFi" {...register("perks")} />
-                WiFi
-              </label>
-
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  value="Breakfast"
-                  {...register("perks")}
-                />
-                Breakfast
-              </label>
-
-              <label className="flex items-center gap-2">
-                <input type="checkbox" value="Cabin" {...register("perks")} />
-                Cabin
-              </label>
             </div>
           </div>
 

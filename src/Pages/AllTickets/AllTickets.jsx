@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import TicketCard from "../../Components/TicketCard/TicketCard";
@@ -6,7 +6,6 @@ import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 
 const AllTickets = () => {
   const axiosSecure = useAxiosSecure();
-
 
   const [fromSearch, setFromSearch] = useState("");
   const [toSearch, setToSearch] = useState("");
@@ -38,10 +37,8 @@ const AllTickets = () => {
     ],
 
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/tickets?from=${debouncedFrom}&to=${debouncedTo}&transportType=${transportFilter}&sort=${sortOrder}`,
-      );
-
+      const res = await axiosSecure.get(`/tickets`);
+       console.log(res.data);
       return res.data;
     },
   });
@@ -49,9 +46,44 @@ const AllTickets = () => {
   const indexOfLast = currentPage * ticketsPerPage;
   const indexOfFirst = indexOfLast - ticketsPerPage;
 
-  const currentTickets = tickets.slice(indexOfFirst, indexOfLast);
 
-  const totalPages = Math.ceil(tickets.length / ticketsPerPage);
+
+const filteredTickets = tickets.filter((ticket) => {
+
+  const fromMatch = debouncedFrom
+    ? ticket.from?.toLowerCase().includes(debouncedFrom.toLowerCase())
+    : true;
+
+  const toMatch = debouncedTo
+    ? ticket.to?.toLowerCase().includes(debouncedTo.toLowerCase())
+    : true;
+
+  const transportMatch = transportFilter
+    ? ticket.transportType === transportFilter
+    : true;
+
+  return fromMatch && toMatch && transportMatch;
+
+});
+
+
+const sortedTickets = [...filteredTickets].sort((a, b) => {
+
+  if (sortOrder === "low") {
+    return Number(a.price) - Number(b.price);
+  }
+
+  if (sortOrder === "high") {
+    return Number(b.price) - Number(a.price);
+  }
+
+  return 0;
+
+});
+
+const currentTickets = sortedTickets.slice(indexOfFirst, indexOfLast);
+
+const totalPages = Math.ceil(sortedTickets.length / ticketsPerPage);
 
   // loading spinner
   if (isLoading) {

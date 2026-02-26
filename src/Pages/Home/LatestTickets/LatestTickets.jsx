@@ -21,7 +21,7 @@ const LatestTickets = () => {
     <div className="bg-teal-50">
       <div className="w-11/12 mx-auto py-10">
         <h2 className="text-3xl font-bold text-center mb-2">Latest Tickets</h2>
-        <p class="text-gray-600 text-center">
+        <p className="text-gray-600 text-center">
           Browse the latest tickets added by vendors and book your journey
           quickly and securely with TicketBari.
         </p>

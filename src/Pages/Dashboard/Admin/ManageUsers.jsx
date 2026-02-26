@@ -64,12 +64,11 @@ const ManageUsers = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="px-3 sm:px-6 lg:px-10 py-6 max-w-7xl mx-auto">
       <h2 className="text-3xl font-bold mb-6">Manage Users</h2>
 
       <div className="overflow-x-auto">
         <table className="table">
-          {/* head */}
           <thead>
             <tr>
               <th>No</th>

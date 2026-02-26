@@ -52,7 +52,7 @@ const MyAddedTickets = () => {
   };
 
   return (
-    <div className="w-10/12 mx-auto">
+    <div className="w-11/12 mx-auto">
       <h2 className="text-2xl font-bold mt-5 text-center mb-10">
         My Added Tickets
       </h2>
@@ -65,7 +65,7 @@ const MyAddedTickets = () => {
         {tickets.map((ticket) => (
           <div
             key={ticket._id}
-            className="card bg-base-100 shadow-sm w-96 rounded p-4 "
+            className="card bg-base-100 shadow-sm w-full rounded p-4"
           >
             <img
               src={ticket.image}

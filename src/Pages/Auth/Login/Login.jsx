@@ -21,10 +21,13 @@ const Login = () => {
     console.log("after login", data);
 
     signInUser(data.email, data.password)
-      .then((result) => {
+      .then(async (result) => {
         console.log(result.user);
 
         setUser(result.user);
+
+        const token = await result.user.getIdToken();
+        localStorage.setItem("accessToken", token);
 
         Swal.fire({
           icon: "success",

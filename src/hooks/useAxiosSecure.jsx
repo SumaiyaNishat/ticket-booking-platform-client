@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
   baseURL: "https://ticket-booking-platform-server.vercel.app",
-   
 });
 
 const useAxiosSecure = () => {
@@ -13,16 +12,15 @@ const useAxiosSecure = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     // Request interceptor
-    const reqInterceptor = axiosSecure.interceptors.request.use(
-      (config) => {
-        if (user?.accessToken) {
-          config.headers.Authorization = `Bearer ${user.accessToken}`;
-        }
-        return config;
+    const reqInterceptor = axiosSecure.interceptors.request.use((config) => {
+      const token = localStorage.getItem("accessToken");
+
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
-    );
+      return config;
+    });
 
     // Response interceptor
     const resInterceptor = axiosSecure.interceptors.response.use(
@@ -37,7 +35,7 @@ const useAxiosSecure = () => {
         }
 
         return Promise.reject(error);
-      }
+      },
     );
 
     // Cleanup
@@ -45,7 +43,6 @@ const useAxiosSecure = () => {
       axiosSecure.interceptors.request.eject(reqInterceptor);
       axiosSecure.interceptors.response.eject(resInterceptor);
     };
-
   }, [user, logOut, navigate]);
 
   return axiosSecure;

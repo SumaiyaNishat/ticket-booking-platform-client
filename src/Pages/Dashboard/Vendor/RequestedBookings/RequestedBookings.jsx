@@ -3,6 +3,7 @@ import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../../Components/LoadingSpinner/LoadingSpinner";
 
 const RequestedBookings = () => {
 
@@ -76,37 +77,37 @@ const RequestedBookings = () => {
 
   if (loading) {
 
-    return <p className="text-center mt-10">Loading...</p>;
+    return <LoadingSpinner></LoadingSpinner>
 
   }
 
 
   return (
 
-    <div className="p-6">
+    <div className="p-3 md:p-6">
 
       <h2 className="text-3xl font-bold mb-6">
         Requested Bookings
       </h2>
 
 
-      <div className="overflow-x-auto">
+      <div className="">
 
-        <table className="table table-zebra">
+        <table className="table table-zebra w-full text-xs sm:text-sm md:text-base">
 
           <thead>
             <tr>
               <th>User Email</th>
               <th>Ticket Title</th>
               <th>Quantity</th>
-              <th>Total Price</th>
-              <th>Status</th>
+              <th className="hidden sm:table-cell">Total Price</th>
+              <th className="hidden sm:table-cell">Status</th>
               <th>Action</th>
             </tr>
           </thead>
 
 
-          <tbody>
+          <tbody className="text-xs sm:text-sm">
 
             {bookings.map(booking => (
 
@@ -124,11 +125,11 @@ const RequestedBookings = () => {
                   {booking.bookingQuantity}
                 </td>
 
-                <td>
+                <td className="hidden sm:table-cell">
                   Tk {booking.unitPrice * booking.bookingQuantity}
                 </td>
 
-                <td>
+                <td className="hidden sm:table-cell">
 
                   <span className={`
                     badge
@@ -146,7 +147,7 @@ const RequestedBookings = () => {
 
                   {booking.status === "pending" && (
 
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
 
                       <button
                         onClick={() => handleAccept(booking._id)}
