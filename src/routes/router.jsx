@@ -24,6 +24,7 @@ import Profile from "../Pages/Dashboard/Profile/Profile";
 import AdvertiseTickets from "../Pages/Dashboard/Admin/AdvertiseTickets";
 import Revenue from "../Pages/Dashboard/Vendor/Revenue/Revenue";
 import UpdateTicket from "../Pages/Dashboard/Vendor/UpdateTicket/UpdateTicket";
+import ErrorPage from "../Components/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      { path: "*", element: <ErrorPage /> }
     ],
   },
   {

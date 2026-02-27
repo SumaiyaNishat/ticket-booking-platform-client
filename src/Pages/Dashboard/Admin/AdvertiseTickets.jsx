@@ -33,42 +33,66 @@ const AdvertiseTickets = () => {
   if (isLoading) return <LoadingSpinner></LoadingSpinner>
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Advertise Tickets</h2>
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Title</th>
+  <h2 className="text-2xl text-center sm:text-3xl font-bold mb-6">
+    Advertise Tickets
+  </h2>
 
-            <th>Price</th>
+  <div className="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
 
-            <th>Advertise</th>
+    <table className="table table-zebra w-full text-sm">
+
+      <thead className="bg-base-200">
+        <tr>
+          <th className="whitespace-nowrap">Title</th>
+          <th className="whitespace-nowrap text-center hidden sm:table-cell">
+            Price
+          </th>
+          <th className="whitespace-nowrap text-center">
+            Advertise
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {tickets.map((ticket) => (
+          <tr key={ticket._id} className="hover">
+
+            <td className="max-w-[200px] truncate">
+              {ticket.title}
+            </td>
+
+           
+            <td className="text-center hidden sm:table-cell">
+              Tk {ticket.price}
+            </td>
+
+            
+            <td className="text-center">
+              <button
+                onClick={() => handleAdvertise(ticket)}
+                className={`btn btn-xs sm:btn-sm ${
+                  ticket.isAdvertised
+                    ? "btn-success"
+                    : "btn-outline"
+                }`}
+              >
+                {ticket.isAdvertised
+                  ? "Unadvertise"
+                  : "Advertise"}
+              </button>
+            </td>
+
           </tr>
-        </thead>
+        ))}
+      </tbody>
 
-        <tbody>
-          {tickets.map((ticket) => (
-            <tr key={ticket._id}>
-              <td>{ticket.title}</td>
+    </table>
 
-              <td>{ticket.price}</td>
+  </div>
 
-              <td>
-                <button
-                  onClick={() => handleAdvertise(ticket)}
-                  className={`btn btn-sm ${
-                    ticket.isAdvertised ? "btn-success" : "btn-outline"
-                  }`}
-                >
-                  {ticket.isAdvertised ? "Unadvertise" : "Advertise"}
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+</div>
   );
 };
 

@@ -5,6 +5,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { IoMdClock } from "react-icons/io";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 
 const TicketDetails = () => {
   const { id } = useParams();
@@ -29,11 +30,8 @@ const TicketDetails = () => {
   });
 
   if (loading)
-    return (
-      <div>
-        <span className="loading loading-infinity loading-xl"></span>
-      </div>
-    );
+    return <LoadingSpinner></LoadingSpinner>
+
   const {
     title,
     from,
@@ -107,8 +105,8 @@ const TicketDetails = () => {
     <div className="bg-teal-100 py-10">
       <div className="w-11/12 mx-auto">
         <div className="card bg-base-100 shadow-xl w-full lg:w-10/12  mx-auto">
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 justify-between items-center">
-            <img src={image} alt="" className="w-full max-w-md lg:max-w-sm mx-auto" />
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 justify-between items-center w-11/12 mx-auto">
+            <img src={image} alt="" className="w-full max-w-md mr-2 lg:max-w-sm"/>
 
             <div className="card-body pb-10 w-full">
               <h2 className="card-title text-3xl">{title}</h2>
