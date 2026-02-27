@@ -95,7 +95,7 @@ const AddTickets = () => {
           icon: "success",
           title: "Ticket Added",
           text: "Waiting for admin approval",
-          timer: 1500,
+          timer: 1000,
           showConfirmButton: false,
         });
 

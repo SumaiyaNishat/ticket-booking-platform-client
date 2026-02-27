@@ -65,67 +65,74 @@ const ManageUsers = () => {
 
   return (
     <div className="px-3 sm:px-6 lg:px-10 py-6 max-w-7xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6">Manage Users</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6">Manage Users</h2>
 
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
+      <div className="overflow-x-auto rounded-lg border border-base-300 bg-base-100">
+        <table className="table table-zebra w-full text-sm">
+          <thead className="bg-base-200">
             <tr>
               <th>No</th>
               <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
+              <th className="hidden md:table-cell">Email</th>
+              <th className="text-center">Role</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
+
           <tbody>
             {users.map((user, index) => (
-              <tr key={user._id}>
+              <tr key={user._id} className="hover">
                 <th>{index + 1}</th>
 
-                <td>{user.name || user.displayName}</td>
-                <td>{user.email}</td>
-                <td>
+                <td className="font-medium">{user.name || user.displayName}</td>
+
+                <td className="hidden md:table-cell truncate max-w-[200px]">
+                  {user.email}
+                </td>
+
+                <td className="text-center">
                   <span
-                    className={`badge
-                      ${
-                        user.role === "admin"
-                          ? "badge-error"
-                          : user.role === "vendor"
-                            ? "badge-warning"
-                            : "badge-info"
-                      }
-                    `}
+                    className={`badge badge-sm
+                  ${
+                    user.role === "admin"
+                      ? "badge-error"
+                      : user.role === "vendor"
+                        ? "badge-warning"
+                        : "badge-info"
+                  }
+                `}
                   >
                     {user.role}
                   </span>
                 </td>
 
-                <td className="space-x-2">
-                  <button
-                    onClick={() => handleMakeAdmin(user._id)}
-                    className="btn btn-xs btn-success"
-                    disabled={user.role === "admin"}
-                  >
-                    Make Admin
-                  </button>
-
-                  <button
-                    onClick={() => handleMakeVendor(user._id)}
-                    className="btn btn-xs btn-primary"
-                    disabled={user.role === "vendor"}
-                  >
-                    Make Vendor
-                  </button>
-
-                  {user.role === "vendor" && (
+                <td>
+                  <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 justify-center">
                     <button
-                      onClick={() => handleFraud(user._id)}
-                      className="btn btn-xs btn-error"
+                      onClick={() => handleMakeAdmin(user._id)}
+                      className="btn btn-xs btn-success"
+                      disabled={user.role === "admin"}
                     >
-                      Mark Fraud
+                      Make Admin
                     </button>
-                  )}
+
+                    <button
+                      onClick={() => handleMakeVendor(user._id)}
+                      className="btn btn-xs btn-primary"
+                      disabled={user.role === "vendor"}
+                    >
+                      Make Vendor
+                    </button>
+
+                    {user.role === "vendor" && (
+                      <button
+                        onClick={() => handleFraud(user._id)}
+                        className="btn btn-xs btn-error"
+                      >
+                        Mark Fraud
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
