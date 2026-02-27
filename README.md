@@ -1,16 +1,65 @@
-# React + Vite
+# TicketBari - Online Ticket Booking Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview and Discussion
+TicketBari is a full-stack Online Ticket Booking Platform built with the MERN stack.
+Users can discover and book Bus, Train, Launch, or Plane tickets, while Vendors manage tickets and Admin controls the system. This project demonstrates real-world features like authentication, role-based dashboards, booking workflows, and secure Stripe payment integration.
 
-Currently, two official plugins are available:
+## Live link: https://ticket-booking-platform-92d4d.web.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Key Features
 
-## React Compiler
+🔐 Firebase Authentication (Email/Password + Google Login)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+👤 Role-based Dashboard (User | Vendor | Admin)
 
-## Expanding the ESLint configuration
+🎟 Ticket Booking with Countdown System
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+💳 Stripe Payment Integration
+
+📊 Revenue Overview with Charts
+
+🔎 Search, Filter & Sort Tickets
+
+📄 Pagination on All Tickets Page
+
+🛡 Protected Routes & Secure APIs (Firebase Token)
+
+📱 Fully Responsive (Mobile, Tablet, Desktop)
+
+🌙 Dark / Light Mode
+
+
+# NPM Packages Used
+🔹 Client Side
+
+react-router-dom – Routing & protected routes
+
+@tanstack/react-query – Server state management & data fetching
+
+firebase – Authentication (Email/Password + Google)
+
+axios – API communication
+
+sweetalert2 – Alert & notification UI
+
+react-icons – Icons
+
+stripe / @stripe/react-stripe-js – Payment integration
+
+tailwindcss – Utility-first CSS framework
+
+daisyui – Component library for Tailwind
+
+🔹 Server Side
+
+express – Backend framework
+
+mongodb – Database connection
+
+cors – Cross-origin handling
+
+dotenv – Environment variable management
+
+firebase-admin – Firebase token verification
+
+stripe – Stripe payment processing
